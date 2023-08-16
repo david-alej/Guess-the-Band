@@ -1,12 +1,60 @@
 .container {
   text-align: center;
+  position: relative;
+  top: 50px;
+}
+
+.container-1 {
+  position: relative;
+  /* width: 1200px;
+  height: 300px; */
+  margin: 240px auto;
+}
+
+.container1 .box {
+  position: relative;
+  width: 370px;
+  height: 270px;
+  background: beige;
+  float: left;
+  margin: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 15px;
+  text-align: center;
 }
 
 .start-game {
   display: inline-block;
   width: 65px;
   height: 20px;
-  padding: 60px 11px;
-  background-color: #dfff00;
+  padding: 45px 45px;
+  background-color: red;
   text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: large;
+  border-radius: 25px;
+}
+
+.quote {
+  text-align: center;
+  position: relative;
+  color: orange;
+  top: 90px;
+}
+
+h1 {
+  color: rgb(199, 92, 199);
+  text-align: center;
+}
+
+body {
+  background-color: rgb(28, 17, 69);
+}
+
+p {
+  left: 0px;
+  top: -30px;
+  position: relative;
 }
