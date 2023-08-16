@@ -1,0 +1,12 @@
+.container {
+  text-align: center;
+}
+
+.start-game {
+  display: inline-block;
+  width: 65px;
+  height: 20px;
+  padding: 60px 11px;
+  background-color: #dfff00;
+  text-align: center;
+}
