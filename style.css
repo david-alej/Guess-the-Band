@@ -1,18 +1,19 @@
-.container {
+#container {
   text-align: center;
   position: relative;
   top: 50px;
 }
 
-.container-1 {
+#container-1 {
   position: relative;
   /* width: 1200px;
   height: 300px; */
   margin: 240px auto;
 }
 
-.container1 .box {
+#container-1 .box {
   position: relative;
+  left: 150px;
   width: 370px;
   height: 270px;
   background: beige;
@@ -24,7 +25,7 @@
   text-align: center;
 }
 
-.start-game {
+#start-game {
   display: inline-block;
   width: 65px;
   height: 20px;
@@ -37,7 +38,7 @@
   border-radius: 25px;
 }
 
-.quote {
+#quote {
   text-align: center;
   position: relative;
   color: orange;
