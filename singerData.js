@@ -2,6 +2,10 @@ function bandFactory(name, songsQoutes) {
   return {
     name,
     songsQoutes,
+    get image() {
+      let imageName = this.name.toLowerCase().split(" ").join("-")
+      return "./" + imageName + ".jpeg"
+    },
   }
 }
 // 100 best rock songs of 2000's
@@ -13,21 +17,15 @@ singers = [
       "B.Y.O.B",
     ],
   ])),
-  (slipKnot = bandFactory(
-    "Slipknot",
-    [["The only things I ever really loved was to hate", "Duality"]],
-    "slipknot"
-  )),
-  (riseAgainst = bandFactory(
-    "Rise Against",
+  (slipKnot = bandFactory("Slipknot", [
+    ["The only things I ever really loved was to hate", "Duality"],
+  ])),
+  (riseAgainst = bandFactory("Rise Against", [
     [
-      [
-        "I don't hate you boy I just want to save while there's still something left to save.",
-        "Savior",
-      ],
+      "I don't hate you boy I just want to save while there's still something left to save.",
+      "Savior",
     ],
-    "rise-against"
-  )),
+  ])),
   (redHotChiliPeppers = bandFactory("Red Hot Chili Peppers", [
     [
       "California, rest in peace simultaneous release California, show your teeth",
@@ -141,6 +139,22 @@ singers = [
     [
       "If I go crazy, then will you still call me Superman? If I'm alive and well, will you be there and holding my hand? I'll keep you by my side with my superhuman might Kryptonite",
       "Kryptonite",
+    ],
+    [
+      "So hold me when I'm here, right me when I'm wrong Hold me when I'm scared and love me when I'm gone Everything I am and everything in me",
+      "When I'm gone",
+    ],
+  ])),
+  (staticX = bandFactory("Static-X", [
+    [
+      "You're trying to take me You're trying to make me This is the only Give me the only thing",
+      "The Only",
+    ],
+  ])),
+  (drowningPool = bandFactory("Drowning Pool", [
+    [
+      "Let the bodies hit the floor Let the bodies hit the floor Let the bodies hit the floor",
+      "Bodies",
     ],
   ])),
 ]
