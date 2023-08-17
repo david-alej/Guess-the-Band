@@ -159,4 +159,4 @@ singers = [
   ])),
 ]
 
-console.log(singers.length)
+export { singers }
