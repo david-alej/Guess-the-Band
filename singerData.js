@@ -16,7 +16,7 @@ const bands = [
       "Chop Suey!",
     ],
     [
-      "La,la,la,la,la,la,la,la,la,la,ooh-ooh Everybody's going to the party, have a real good time Dancing in the desert, blowing up the sunshine",
+      "La,-la,-la,-la,-la,-la,-la,-la,-la,-la, ooh-ooh Everybody's going to the party, have a real good time Dancing in the desert, blowing up the sunshine",
       "B.Y.O.B",
     ],
   ]),
