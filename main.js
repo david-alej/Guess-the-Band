@@ -14,7 +14,7 @@ let round = 0
 let games = 0
 let answers = []
 let userChoices = []
-let bandsCache = []
+let bandsCache = [0, 0, 0]
 
 // Following two functions are Helper functions
 function randomNumber(upperLimit) {
@@ -23,43 +23,15 @@ function randomNumber(upperLimit) {
 
 function removeElement(array, unwantedElement) {
   const index = array.indexOf(unwantedElement)
+  if (index === -1) {
+    console.log("Error", unwantedElement, "was already choosen.")
+    return
+  }
   array.splice(index, 1)
 }
 
 function fillGameScreen(event) {
-  // Stores user choices of options on userChoices array
-  if (round !== 0 && round < 11) {
-    if (
-      event.target === boxes[0] ||
-      event.target === bandsName[0] ||
-      event.target === bandsImage[0]
-    ) {
-      userChoices.push(0)
-    } else if (
-      event.target === boxes[1] ||
-      event.target === bandsName[1] ||
-      event.target === bandsImage[1]
-    ) {
-      userChoices.push(1)
-    } else {
-      userChoices.push(2)
-    }
-  } else if (round === 0) {
-    round++
-  }
-
-  if (round > 10) {
-    // console.log(answers)
-    console.log(userChoices)
-    round = 0
-    games++
-    if (games === 2) {
-      console.log("Game Finished")
-      return
-    }
-    return
-  }
-  // Getting the positions of the band answer for the lyric and the other two options randomly
+  // Getting the option positions of the band answer for the lyric and the other two options randomly
   const optionsArray = [0, 1, 2]
   const answerOption = randomNumber(3)
   removeElement(optionsArray, answerOption)
@@ -70,54 +42,71 @@ function fillGameScreen(event) {
   // Making sure that the option values in the current round are not the same as the option values from the previous round
   let bandsIndexes = Array.from(Array(bands.length).keys())
   for (let i = 0; i < 3; i++) {
-    if (round === 1) {
+    if (round === 0) {
       break
     }
     removeElement(bandsIndexes, bands.indexOf(bandsCache[i]))
   }
 
-  // Emptying bandsCache array
-  bandsCache.splice(0, bandsCache.length)
+  // Zeroing bandsCache array
+  bandsCache.map(() => 0)
 
   // Getting answer variables
   const answerIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
   const answer = bands[answerIndex]
   const lyricSongIndex = randomNumber(answer.lyricsSongs.length)
-  answers.push([answer.name, answer.lyricsSongs[lyricSongIndex]], answerOption)
+  answers.push([answer.name, answer.lyricsSongs[lyricSongIndex]])
   removeElement(bandsIndexes, bands.indexOf(answer))
 
   // filling out the lyric and band answer on the game screen
   bandsName[answerOption].innerHTML = answer.name
   bandsImage[answerOption].src = answer.image
   lyrics.innerHTML = answer.lyricsSongs[lyricSongIndex][0]
-  bandsCache.push(answer)
-
-  // //Removing the band answer lyric or the whole band from the bands array
-  // if (answer.lyricsSongs.length === 1) {
-  //   removeElement(bandsIndexes, bands.indexOf(answer))
-  //   removeElement(bands, answer)
-  // } else {
-  //   removeElement(answer.lyricsSongs, answer.lyricsSongs[lyricSongIndex])
-  // }
+  bandsCache[answerOption] = answer
 
   // filling out an option value with a random band and making sure that this option value and the remaining option value are not the same.
-  let bandIndex = randomNumber(bandsIndexes.length)
+  let bandIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
   removeElement(bandsIndexes, bandIndex)
   let band = bands[bandIndex]
   bandsName[secondOption].innerHTML = band.name
   bandsImage[secondOption].src = band.image
-  bandsCache.push(band)
+  bandsCache[secondOption] = band
 
   // filling out the last option for a band
   bandIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
   band = bands[bandIndex]
   bandsName[thirdOption].innerHTML = band.name
   bandsImage[thirdOption].src = band.image
-  bandsCache.push(band)
-  // console.log(bandsCache)
+  bandsCache[thirdOption] = band
 
   // +1 to the total rounds played
   round++
+}
+
+function getUserChoice(event) {
+  if (
+    event.target === boxes[0] ||
+    event.target === bandsName[0] ||
+    event.target === bandsImage[0]
+  ) {
+    userChoices.push(bandsCache[0].name)
+  } else if (
+    event.target === boxes[1] ||
+    event.target === bandsName[1] ||
+    event.target === bandsImage[1]
+  ) {
+    userChoices.push(bandsCache[1].name)
+  } else {
+    userChoices.push(bandsCache[2].name)
+  }
+  console.log(answers)
+  console.log(userChoices)
+
+  if (round === 10) {
+    return
+  }
+
+  fillGameScreen()
 }
 
 function startGame() {
@@ -130,6 +119,6 @@ function startGame() {
 
 startGameButton.onclick = startGame
 for (let i = 0; i < 3; i++) {
-  boxes[i].addEventListener("click", fillGameScreen)
+  boxes[i].addEventListener("click", getUserChoice)
 }
 console.log("abcdefghijk"[Math.floor(Math.random() * 11)])
