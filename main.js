@@ -1,19 +1,25 @@
 import { bands } from "./singerData.js"
 
-let startGameButton = document.getElementsByClassName("game-button")[0]
-let startGameButtonDivision = document.getElementsByClassName("container")[0]
-let secondGameButton = document.getElementsByClassName("game-button")[1]
+// Following variabel are elements that are order the same as they appear in the HTML file
+// Individual elements:
 let lyrics = document.getElementById("lyrics")
-let options = document.getElementById("container-one")
-let results = document.getElementsByClassName("table-container")[0]
-let matchHistory = document.getElementsByClassName("table-container")[1]
 
+let title = document.getElementsByTagName("h1")[0]
+
+// Grouped Elements: later varaibles are child elements of the first variable
+let startGameButtonDivision = document.getElementsByClassName("container")[0]
+let startGameButton = document.getElementsByClassName("game-button")[0]
+
+let options = document.getElementById("container-one")
 let boxes = document.getElementsByClassName("box")
 let bandsName = document.getElementsByClassName("bands")
 let bandsImage = document.getElementsByClassName("bands-image")
 
-let title = document.getElementsByTagName("h1")[0]
+let results = document.getElementsByClassName("table-container")[0]
 let table = document.getElementsByTagName("table")[0]
+let secondGameButton = document.getElementsByClassName("game-button")[1]
+
+let matchHistory = document.getElementsByClassName("table-container")[1]
 let tableHistory = document.getElementsByTagName("table")[1]
 
 // Initializing meta information about the game
@@ -45,6 +51,7 @@ function fillResultsScreen() {
   matchHistory.style.display = "block"
   title.innerHTML = "Match " + match
 
+  // Filling out the Resuls table
   for (var i = 1, row; (row = table.rows[i]); i++) {
     if (answers[i - 1][0] === userChoices[i - 1]) {
       row.style.backgroundColor = "#32CD32"
@@ -67,6 +74,7 @@ function fillResultsScreen() {
     }
   }
 
+  // Making new row that stores information of this match in the Match History
   let matchRow = document.createElement("tr")
   let matchNumber = document.createElement("td")
   let matchResults = document.createElement("td")
@@ -78,6 +86,11 @@ function fillResultsScreen() {
 }
 
 function fillGameScreen() {
+  // +1 to the total rounds played
+  round++
+
+  title.innerHTML = "Round " + round
+
   // Getting the option positions of the band answer for the lyric and the other two options randomly
   const optionsArray = [0, 1, 2]
   const answerOption = randomNumber(3)
@@ -98,40 +111,38 @@ function fillGameScreen() {
   // Zeroing bandsCache array
   bandsCache.map(() => 0)
 
-  // Getting answer variables
+  // Getting the indecies for the bands and making sure there are no duplicates in the band options
   const answerIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
   const answer = bands[answerIndex]
   const lyricSongIndex = randomNumber(answer.lyricsSongs.length)
-  answers.push([answer.name, answer.lyricsSongs[lyricSongIndex]])
   removeElement(bandsIndexes, bands.indexOf(answer))
 
-  // filling out the lyric and band answer on the game screen
-  bandsName[answerOption].innerHTML = answer.name
-  bandsImage[answerOption].src = answer.image
-  lyrics.innerHTML = answer.lyricsSongs[lyricSongIndex][0]
-  bandsCache[answerOption] = answer
-
-  // filling out an option value with a random band and making sure that this option value and the remaining option value are not the same.
-  let bandIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
+  let secondIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
   removeElement(bandsIndexes, bandIndex)
-  let band = bands[bandIndex]
-  bandsName[secondOption].innerHTML = band.name
-  bandsImage[secondOption].src = band.image
-  bandsCache[secondOption] = band
 
-  // filling out the last option for a band
-  bandIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
-  band = bands[bandIndex]
-  bandsName[thirdOption].innerHTML = band.name
-  bandsImage[thirdOption].src = band.image
-  bandsCache[thirdOption] = band
+  let thirdIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
 
-  // +1 to the total rounds played
-  round++
-  title.innerHTML = "Round " + round
+  // Insesrting and storing values
+  lyrics.innerHTML = answer.lyricsSongs[lyricSongIndex][0]
+  answers.push([answer.name, answer.lyricsSongs[lyricSongIndex]])
+
+  // Filling out option values, text and image inside options
+  let optionsIndexes = [
+    [answerOption, answerIndex],
+    [secondOption, secondIndex],
+    [thirdOption, thirdIndex],
+  ]
+  for (let i = 0; i < optionsIndexes.length; i++) {
+    const option = optionsIndexes[0]
+    const index = optionsIndexes[1]
+    bandsName[option].innerHTML = bands[index].name
+    bandsImage[option].src = bands[index].image
+    bandsCache[option] = bands[index]
+  }
 }
 
 function getUserChoice(event) {
+  // Storing user choice
   if (
     event.target === boxes[0] ||
     event.target === bandsName[0] ||
@@ -150,6 +161,7 @@ function getUserChoice(event) {
   console.log(answers)
   console.log(userChoices)
 
+  // Checking if match has eneded
   if (round === 10) {
     match++
     fillResultsScreen()
@@ -162,6 +174,7 @@ function getUserChoice(event) {
     return
   }
 
+  //Next round
   fillGameScreen()
 }
 
@@ -172,6 +185,7 @@ function startGame() {
   matchHistory.style.display = "none"
   lyrics.style.display = "block"
   options.style.display = "block"
+
   fillGameScreen()
 }
 

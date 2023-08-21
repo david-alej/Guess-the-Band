@@ -1,3 +1,4 @@
+/* General style */
 html {
   color-scheme: dark;
 }
@@ -6,11 +7,7 @@ body {
   background: #292c41;
 }
 
-.wrapper {
-  width: min(900px, 100% - 3rem);
-  margin-inline: auto;
-}
-
+/* Containers */
 .container {
   text-align: center;
   position: relative;
@@ -19,8 +16,6 @@ body {
 
 #container-one {
   position: relative;
-  /* width: 1200px;
-  height: 300px; */
   margin: 240px auto;
 }
 
@@ -38,7 +33,12 @@ body {
   text-align: center;
 }
 
-/* Trying to make my boxes hover */
+.table-container {
+  position: relative;
+  max-width: 100%;
+}
+
+/* Buttons */
 .box .game-button {
   transition: 0.3s;
 }
@@ -65,28 +65,13 @@ body {
   border-radius: 25px;
 }
 
-#lyrics {
-  text-align: center;
-  position: relative;
-  color: orange;
-  top: 90px;
-}
-
-.table-container {
-  position: relative;
-  max-width: 100%;
-  /* overflow: auto; */
-}
-
-h1 {
-  text-align: center;
-}
-
 p {
   left: 0px;
   top: -30px;
   position: relative;
 }
+
+/* Formatting Table */
 table {
   text-align: left;
   width: 100%;
@@ -98,10 +83,24 @@ th,
 td {
   padding: 1rem;
 }
+
 th {
   text-align: left;
   background-color: hsl(0 0% 0% / 0.5);
 }
+
 tr:nth-of-type(2n) {
   background: hsl(0 0% 0% / 0.1);
+}
+
+/* Miscellaneous */
+#lyrics {
+  text-align: center;
+  position: relative;
+  color: orange;
+  top: 90px;
+}
+
+h1 {
+  text-align: center;
 }
