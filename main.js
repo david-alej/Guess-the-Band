@@ -1,10 +1,9 @@
 import { bands } from "./singerData.js"
 
-// Following variabel are elements that are order the same as they appear in the HTML file
+// Following variables are elements that are ordered the same as they appear in the HTML file
 // Individual elements:
-let lyrics = document.getElementById("lyrics")
-
 let title = document.getElementsByTagName("h1")[0]
+let lyrics = document.getElementById("lyrics")
 
 // Grouped Elements: later varaibles are child elements of the first variable
 let startGameButtonDivision = document.getElementsByClassName("container")[0]
@@ -112,15 +111,26 @@ function fillGameScreen() {
   bandsCache.map(() => 0)
 
   // Getting the indecies for the bands and making sure there are no duplicates in the band options
+  let secondIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
+  removeElement(bandsIndexes, secondIndex)
+
+  let thirdIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
+  removeElement(bandsIndexes, thirdIndex)
+
+  // Removing all previous answers in this match from the possible choices of this round's answers
+  if (round !== 0) {
+    for (let i = 0; i < answers.length; i++) {
+      for (let j = 0; j < bandsIndexes.length; j++) {
+        if (answers[i][0] === bands[bandsIndexes[j]].name) {
+          removeElement(bandsIndexes, bandsIndexes[j])
+        }
+      }
+    }
+  }
+
   const answerIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
   const answer = bands[answerIndex]
   const lyricSongIndex = randomNumber(answer.lyricsSongs.length)
-  removeElement(bandsIndexes, bands.indexOf(answer))
-
-  let secondIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
-  removeElement(bandsIndexes, bandIndex)
-
-  let thirdIndex = bandsIndexes[randomNumber(bandsIndexes.length)]
 
   // Insesrting and storing values
   lyrics.innerHTML = answer.lyricsSongs[lyricSongIndex][0]
@@ -133,8 +143,9 @@ function fillGameScreen() {
     [thirdOption, thirdIndex],
   ]
   for (let i = 0; i < optionsIndexes.length; i++) {
-    const option = optionsIndexes[0]
-    const index = optionsIndexes[1]
+    const ith = optionsIndexes[i]
+    const option = ith[0]
+    const index = ith[1]
     bandsName[option].innerHTML = bands[index].name
     bandsImage[option].src = bands[index].image
     bandsCache[option] = bands[index]
@@ -158,6 +169,7 @@ function getUserChoice(event) {
   } else {
     userChoices.push(bandsCache[2].name)
   }
+  // here user wants to check answers and user choices on DevTools console
   console.log(answers)
   console.log(userChoices)
 
