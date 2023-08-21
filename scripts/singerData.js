@@ -4,7 +4,7 @@ function bandFactory(name, lyricsSongs) {
     lyricsSongs,
     get image() {
       let imageName = this.name.toLowerCase().split(" ").join("-")
-      return "./images/" + imageName + ".jpeg"
+      return "./images/bands/" + imageName + ".jpeg"
     },
   }
 }
