@@ -52,23 +52,6 @@ body {
 }
 
 .game-button {
-  display: inline-block;
-  width: 65px;
-  height: 20px;
-  padding: 45px 45px;
-  background-color: red;
-  text-align: center;
-  color: white;
-  font-weight: bold;
-  font-size: large;
-  border-radius: 25px;
-}
-
-#start-second-match:hover {
-  transform: scale(1.2);
-}
-
-/* #start-second-match {
   position: relative;
   display: inline-block;
   width: 65px;
@@ -80,9 +63,7 @@ body {
   font-weight: bold;
   font-size: large;
   border-radius: 25px;
-  left: 670px;
-  top: 50px;
-} */
+}
 
 #lyrics {
   text-align: center;
@@ -91,9 +72,10 @@ body {
   top: 90px;
 }
 
-#table-container {
+.table-container {
+  position: relative;
   max-width: 100%;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 h1 {

@@ -5,7 +5,8 @@ let startGameButtonDivision = document.getElementsByClassName("container")[0]
 let secondGameButton = document.getElementsByClassName("game-button")[1]
 let lyrics = document.getElementById("lyrics")
 let options = document.getElementById("container-one")
-let results = document.getElementById("table-container")
+let results = document.getElementsByClassName("table-container")[0]
+let matchHistory = document.getElementsByClassName("table-container")[1]
 
 let boxes = document.getElementsByClassName("box")
 let bandsName = document.getElementsByClassName("bands")
@@ -13,10 +14,12 @@ let bandsImage = document.getElementsByClassName("bands-image")
 
 let title = document.getElementsByTagName("h1")[0]
 let table = document.getElementsByTagName("table")[0]
+let tableHistory = document.getElementsByTagName("table")[1]
 
 // Initializing meta information about the game
 let round = 0
 let match = 0
+let correctRounds = 0
 let answers = [] // formatted: [ [band name, [lyrics, name of song]], ... ]
 let userChoices = [] // formatted: [ user band choice, ...]
 let bandsCache = [0, 0, 0]
@@ -39,11 +42,13 @@ function fillResultsScreen() {
   lyrics.style.display = "none"
   options.style.display = "none"
   results.style.display = "block"
+  matchHistory.style.display = "block"
   title.innerHTML = "Match " + match
 
   for (var i = 1, row; (row = table.rows[i]); i++) {
     if (answers[i - 1][0] === userChoices[i - 1]) {
       row.style.backgroundColor = "#32CD32"
+      correctRounds++
     } else {
       row.style.backgroundColor = "#8B0000"
     }
@@ -61,6 +66,15 @@ function fillResultsScreen() {
       }
     }
   }
+
+  let matchRow = document.createElement("tr")
+  let matchNumber = document.createElement("td")
+  let matchResults = document.createElement("td")
+  matchNumber.innerHTML = match
+  matchResults.innerHTML = correctRounds
+  matchRow.appendChild(matchNumber)
+  matchRow.appendChild(matchResults)
+  tableHistory.appendChild(matchRow)
 }
 
 function fillGameScreen() {
@@ -144,6 +158,7 @@ function getUserChoice(event) {
     round = 0
     answers = []
     userChoices = []
+    correctRounds = 0
     return
   }
 
@@ -154,6 +169,7 @@ function startGame() {
   // Making start button invisible and the game screen visible
   startGameButtonDivision.style.display = "none"
   results.style.display = "none"
+  matchHistory.style.display = "none"
   lyrics.style.display = "block"
   options.style.display = "block"
   fillGameScreen()
