@@ -40,15 +40,15 @@ body {
 
 /* Trying to make my boxes hover */
 .box #start-game {
-  border: 10px solid black;
   transition: 0.3s;
 }
 
-.box::hover ~ * {
-  border-width: 10px;
+.box:hover {
+  transform: scale(1.2);
 }
-#start-game::hover ~ * {
-  border-width: 10px;
+
+#start-game:hover {
+  transform: scale(1.2);
 }
 
 #start-game {
