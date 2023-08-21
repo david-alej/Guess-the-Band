@@ -4,16 +4,20 @@ let startGameButton = document.getElementById("start-game")
 let startGameButtonDivision = document.getElementById("container")
 let lyrics = document.getElementById("lyrics")
 let options = document.getElementById("container-1")
+let results = document.getElementById("table-container")
 
 let boxes = document.getElementsByClassName("box")
 let bandsName = document.getElementsByClassName("bands")
 let bandsImage = document.getElementsByClassName("bands-image")
 
+let title = document.getElementsByTagName("h1")[0]
+let table = document.getElementsByTagName("table")[0]
+
 // Initializing meta information about the game
 let round = 0
 let games = 0
-let answers = []
-let userChoices = []
+let answers = [] // formatted: [ [band name, [lyrics, name of song]], ... ]
+let userChoices = [] // formatted: [ user band choice, ...]
 let bandsCache = [0, 0, 0]
 
 // Following two functions are Helper functions
@@ -30,7 +34,38 @@ function removeElement(array, unwantedElement) {
   array.splice(index, 1)
 }
 
-function fillGameScreen(event) {
+function fillResultsScreen() {
+  lyrics.style.display = "none"
+  options.style.display = "none"
+  results.style.display = "block"
+  if (round < 11) {
+    title.innerHTML = "Match 1"
+  } else {
+    title.innerHTML = "Match 2"
+  }
+  for (var i = 1, row; (row = table.rows[i]); i++) {
+    if (answers[i - 1][0] === userChoices[i - 1]) {
+      row.style.backgroundColor = "#32CD32"
+    } else {
+      row.style.backgroundColor = "#8B0000"
+    }
+    for (var j = 0, col; (col = row.cells[j]); j++) {
+      if (j === 0) {
+        col.innerHTML = i
+      } else if (j === 1) {
+        col.innerHTML = answers[i - 1][1][0]
+      } else if (j === 2) {
+        col.innerHTML = answers[i - 1][1][1]
+      } else if (j === 3) {
+        col.innerHTML = answers[i - 1][0]
+      } else if (j === 4) {
+        col.innerHTML = userChoices[i - 1]
+      }
+    }
+  }
+}
+
+function fillGameScreen() {
   // Getting the option positions of the band answer for the lyric and the other two options randomly
   const optionsArray = [0, 1, 2]
   const answerOption = randomNumber(3)
@@ -81,6 +116,7 @@ function fillGameScreen(event) {
 
   // +1 to the total rounds played
   round++
+  title.innerHTML = "Round " + round
 }
 
 function getUserChoice(event) {
@@ -103,6 +139,7 @@ function getUserChoice(event) {
   console.log(userChoices)
 
   if (round === 10) {
+    fillResultsScreen()
     return
   }
 
