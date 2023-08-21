@@ -1,9 +1,10 @@
 import { bands } from "./singerData.js"
 
-let startGameButton = document.getElementById("start-game")
-let startGameButtonDivision = document.getElementById("container")
+let startGameButton = document.getElementsByClassName("game-button")[0]
+let startGameButtonDivision = document.getElementsByClassName("container")[0]
+let secondGameButton = document.getElementsByClassName("game-button")[1]
 let lyrics = document.getElementById("lyrics")
-let options = document.getElementById("container-1")
+let options = document.getElementById("container-one")
 let results = document.getElementById("table-container")
 
 let boxes = document.getElementsByClassName("box")
@@ -15,7 +16,7 @@ let table = document.getElementsByTagName("table")[0]
 
 // Initializing meta information about the game
 let round = 0
-let games = 0
+let match = 0
 let answers = [] // formatted: [ [band name, [lyrics, name of song]], ... ]
 let userChoices = [] // formatted: [ user band choice, ...]
 let bandsCache = [0, 0, 0]
@@ -38,11 +39,8 @@ function fillResultsScreen() {
   lyrics.style.display = "none"
   options.style.display = "none"
   results.style.display = "block"
-  if (round < 11) {
-    title.innerHTML = "Match 1"
-  } else {
-    title.innerHTML = "Match 2"
-  }
+  title.innerHTML = "Match " + match
+
   for (var i = 1, row; (row = table.rows[i]); i++) {
     if (answers[i - 1][0] === userChoices[i - 1]) {
       row.style.backgroundColor = "#32CD32"
@@ -139,7 +137,13 @@ function getUserChoice(event) {
   console.log(userChoices)
 
   if (round === 10) {
+    match++
     fillResultsScreen()
+
+    // Reseting values
+    round = 0
+    answers = []
+    userChoices = []
     return
   }
 
@@ -149,6 +153,7 @@ function getUserChoice(event) {
 function startGame() {
   // Making start button invisible and the game screen visible
   startGameButtonDivision.style.display = "none"
+  results.style.display = "none"
   lyrics.style.display = "block"
   options.style.display = "block"
   fillGameScreen()
@@ -158,4 +163,4 @@ startGameButton.onclick = startGame
 for (let i = 0; i < 3; i++) {
   boxes[i].addEventListener("click", getUserChoice)
 }
-console.log("abcdefghijk"[Math.floor(Math.random() * 11)])
+secondGameButton.onclick = startGame

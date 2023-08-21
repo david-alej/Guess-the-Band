@@ -11,20 +11,20 @@ body {
   margin-inline: auto;
 }
 
-#container {
+.container {
   text-align: center;
   position: relative;
   top: 50px;
 }
 
-#container-1 {
+#container-one {
   position: relative;
   /* width: 1200px;
   height: 300px; */
   margin: 240px auto;
 }
 
-#container-1 .box {
+#container-one .box {
   position: relative;
   left: 300px;
   width: 370px;
@@ -39,7 +39,7 @@ body {
 }
 
 /* Trying to make my boxes hover */
-.box #start-game {
+.box .game-button {
   transition: 0.3s;
 }
 
@@ -47,11 +47,11 @@ body {
   transform: scale(1.1);
 }
 
-#start-game:hover {
+.game-button:hover {
   transform: scale(1.2);
 }
 
-#start-game {
+.game-button {
   display: inline-block;
   width: 65px;
   height: 20px;
@@ -68,7 +68,7 @@ body {
   transform: scale(1.2);
 }
 
-#start-second-match {
+/* #start-second-match {
   position: relative;
   display: inline-block;
   width: 65px;
@@ -82,7 +82,7 @@ body {
   border-radius: 25px;
   left: 670px;
   top: 50px;
-}
+} */
 
 #lyrics {
   text-align: center;
